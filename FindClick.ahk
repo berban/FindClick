@@ -144,7 +144,7 @@ FindClick(ImageFile="", Options="", ByRef FoundX="", ByRef FoundY="") ; updated 
 				Description     If Center is true then clicks will occur at the center of the image, i.e. its found position plus half its width and half its height. The x and y options treat this as 0, 0 – for instance, by default an x of 2 will click 2 pixels to the right of the image center. Indicate false to instead start at the top left corner of the image.
 				--------------------------------------------------------------------------------
 				Func            Function Callout
-                What to give    The name of a function in the script
+				What to give    The name of a function in the script
 				Description     Each time an image is found, instead of clicking on the image or executing keystrokes the given function will be called. The function must accept at least two parameters: the x-coordinate of the image will be passed in the first parameter, and the y-coordinate will be passed in the second parameter. Note that any thread settings such as CoordMode that are changed within the function will carry over to FindClick when the function is done.
 				--------------------------------------------------------------------------------
 				d               Direction Of Search
