@@ -5,7 +5,7 @@ FindClick(ImageFile="", Options="", ByRef FoundX="", ByRef FoundY="") ; updated 
 	, ImageW, ImageH, LastX1, LastY1, ImageFilePath ; (xxx Does LastX/Y use the static ability?)
  	, LastOptions, LastImageFile, MonitorInfo, DxInfo
 	, GuiHWND, GuiCommand, GuiTitle
-	, Error, Message, Buttons, # := "`t", $ := "`r"
+	, Error, Message, Buttons, # := "`t", $ := "`r", CoordModePixel, CoordModeMouse
 	GlobalSettingsLocation = %A_LineNumber%
 	;||||||||||||||||||||||||||||||||||| Misc. Global Script Settings |||||||||||||||||||||||||||||||||||
 	;----------------------------------------------------------------------------------------------------
@@ -410,6 +410,7 @@ FindClick(ImageFile="", Options="", ByRef FoundX="", ByRef FoundY="") ; updated 
 				MonitorInfo .= "`n" @Left "," @Top ";" @Right - 1 "," @Bottom - 1
 			}
 		}
+		CoordModePixel := A_CoordModePixel, CoordModeMouse := A_CoordModeMouse
 		CoordMode, Pixel
 		CoordMode, Mouse
 		If (r <> "") {
@@ -766,6 +767,8 @@ FindClick(ImageFile="", Options="", ByRef FoundX="", ByRef FoundY="") ; updated 
 			. "l:" A_LineNumber + 1
 			, %A_ThisFunc%(">Debug:", dx)
 		ErrorLevel := False
+		CoordMode, Pixel, %CoordModePixel%
+		CoordMode, Mouse, %CoordModeMouse%
 		Return Count ? Found : Results ? SubStr(Results, StrLen(Delim) + 1) : False
 	}
 	Else If ImageFile = >ParseCache< ;--------------------------------------------------Checks if an image file has already been used--------------------------------------------------
@@ -914,6 +917,8 @@ FindClick(ImageFile="", Options="", ByRef FoundX="", ByRef FoundY="") ; updated 
 	Else If ImageFile = >Error< ;--------------------------------------------------Displays & handles error dialogs--------------------------------------------------
 	{
 		ErrorLevel = %Error% - %Message%
+		CoordMode, Pixel, %CoordModePixel%
+		CoordMode, Mouse, %CoordModeMouse%
 		If !Silent
 			If !DxInfo {
 				Margins = 10
@@ -1255,6 +1260,9 @@ FindClick(ImageFile="", Options="", ByRef FoundX="", ByRef FoundY="") ; updated 
 			}
 		}
 	} Else If (GuiHWND = "") { ;--------------------------------------------------Screenshot Builder--------------------------------------------------
+		CoordModePixel1 := A_CoordModePixel
+		CoordModeMouse1 := A_CoordModeMouse
+		CoordModeMenu1 := A_CoordModeMenu
 		CoordMode, Mouse, Screen
 		CoordMode, Pixel, Screen
 		CoordMode, Menu, Screen
@@ -1554,6 +1562,9 @@ FindClick(ImageFile="", Options="", ByRef FoundX="", ByRef FoundY="") ; updated 
 						Break
 					} Else If (GuiCommand <> "ErrorLevel") {
 						GuiHWND := ""
+						CoordMode, Pixel, %CoordModePixel1%
+						CoordMode, Mouse, %CoordModeMouse1%
+						CoordMode, Menu, %CoordModeMenu1%
 						If (TempGuiCommand = ButtonSave) {
 							FileCreateDir, % SubStr(OutputFile, 1, InStr(OutputFile, "\", 0, 0))
 							Cache := Name A_Tab OutputFile "." Extension A_Tab X2 - X1 + 1 "|" Y2 - Y1 + 1 "||`n" Cache, FoundX := OutputFile "." Extension, FoundY := Options
