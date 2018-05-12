@@ -1,4 +1,4 @@
-FindClick(ImageFile="", Options="", ByRef FoundX="", ByRef FoundY="") ; updated February 17, 2017 ... https://autohotkey.com/boards/viewtopic.php?f=6&t=18719
+FindClick(ImageFile="", Options="", ByRef FoundX="", ByRef FoundY="") ; updated May 12, 2018 ... https://autohotkey.com/boards/viewtopic.php?f=6&t=18719
 {
 	Static Cache
 	, Center, Silent, Delim, Count, CharX, CharY, CharN, Sleep, Stay, Func, dx, d, m, x, y, o, n, k, r, e, a, w, t, f
