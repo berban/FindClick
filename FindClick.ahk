@@ -1,4 +1,4 @@
-FindClick(ImageFile="", Options="", ByRef FoundX="", ByRef FoundY="") ; updated February 22, 2019 ... https://autohotkey.com/boards/viewtopic.php?f=6&t=18719
+﻿FindClick(ImageFile="", Options="", ByRef FoundX="", ByRef FoundY="") ; updated March 15, 2019 ... https://autohotkey.com/boards/viewtopic.php?f=6&t=18719
 {
 	Static Cache
 	, Center, Silent, Delim, Count, CharX, CharY, CharN, Sleep, Stay, Func, dx, d, m, x, y, o, n, k, r, e, a, w, t, f
@@ -719,11 +719,11 @@ FindClick(ImageFile="", Options="", ByRef FoundX="", ByRef FoundY="") ; updated 
 				If DxInfo
 					DxInfo .= $ "2:Search #" A_Index @
 					. $ "3:Image Not Found" #
-					. "t:The image was not found in the given region.`n`n" ((Results and e) or (d and MostX != "") ? SubRegions = "" ? "No more regions remain to be searched (""e"" or ""d"" option) so the script will now finish." : "Moving on to the next region:`n" SubStr(SubRegions, 1, InStr(SubRegions, "`n") - 1) : (w = "" ? "Because the ""w"" option (wait for an image to be found) was not used, the script will now finish." : "The ""w"" option was indicated as " w " and " A_ThisFunc "() has continued to search for the image. However the wait time has now expired and the script will finish.")) #
+					. "t:The image was not found in the given region.`n`n" ((Results and e) or (d and MostX != "") or ((a = "") and (r = "") and (MonitorCount > 1)) ? SubRegions = "" ? "No more regions remain to be searched (""e"" or ""d"" option, or multiple monitors) so the script will now finish." : "Moving on to the next region:`n" SubStr(SubRegions, 1, InStr(SubRegions, "`n") - 1) : (w = "" ? "Because the ""w"" option (wait for an image to be found) was not used, the script will now finish." : "The ""w"" option was indicated as " w " and " A_ThisFunc "() has continued to search for the image. However the wait time has now expired and the script will finish.")) #
 					. "g:Color,44AADD,0000FF;Trans,80;Add,Progress,x" @5 " y" @5 " w" Search3 - Search1 + 1 " h" Search4 - Search2 + 1 " cRed BackgroundRed,100;Show,NA x" Search1 - @5 " y" Search2 - @5 " w" Search3 - Search1 + e1 + @5 * 2 + 1 " h" Search4 - Search2 + e2 + @5 * 2 + 1 #
 					. "d:3" #
 					. "l:" A_LineNumber - 2
-				If !(((Results and e) or (d and MostX != "")) and (Subregions != "")) ; added 2019-02-14
+				If !(((Results and e) or (d and MostX != "") or ((a = "") and (r = "") and (MonitorCount > 1))) and (Subregions != "")) ; added 2019-02-14
 					Break
 			} Else If (w2 <> "") and (Results = "") {
 				If DxInfo
