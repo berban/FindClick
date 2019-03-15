@@ -614,21 +614,24 @@
 								DetectHiddenWindows := A_DetectHiddenWindows
 								DetectHiddenWindows, Off
 							}
-							WinGet, WinList, List
-							Loop %WinList% {
-								WinGetPos, @1, @2, @3, @4, % "ahk_id " WinList%A_Index%
-								If (FoundX >= @1) and (FoundY >= @2) and (FoundX <= @1 + @3) and (FoundY <= @2 + @4) {
-									Window := WinList%A_Index%
-									WinGetPos, ClickX, ClickY, , , ahk_id %Window%
-									Break
-								} Else If (A_Index = WinList) {
-									Error = ControlClick Error
-									Message = %A_ThisFunc%() was unable to locate a window to use for a ControlClick keystroke.
-									Buttons = &Debug,E&xit,&Help
-									%A_ThisFunc%(">Error<")
-									Return
+							If (r = "") {
+								WinGet, WinList, List
+								Loop %WinList% {
+									WinGetPos, @1, @2, @3, @4, % "ahk_id " WinList%A_Index%
+									If (FoundX >= @1) and (FoundY >= @2) and (FoundX <= @1 + @3) and (FoundY <= @2 + @4) {
+										Window := "ahk_id " WinList%A_Index%
+										Break
+									} Else If (A_Index = WinList) {
+										Error = ControlClick Error
+										Message = %A_ThisFunc%() was unable to locate a window to use for a ControlClick keystroke.
+										Buttons = &Debug,E&xit,&Help
+										%A_ThisFunc%(">Error<")
+										Return
+									}
 								}
-							}
+							} Else
+								Window := r
+							WinGetPos, ClickX, ClickY, , , %Window%
 						} Else {
 							If (Found = 1) {
 								CoordMode, Mouse
